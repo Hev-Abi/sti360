@@ -24,7 +24,7 @@ export default function DashboardShell({
       {/* SIDEBAR */}
       <aside style={styles.sidebar}>
         <div>
-          <h2 style={styles.brand}>EduTrack</h2>
+          <h2 style={styles.brand}>STI 360 Life Cycle</h2>
           <p style={styles.roleLabel}>{roleConfig.label}</p>
 
           <div style={styles.navContainer}>

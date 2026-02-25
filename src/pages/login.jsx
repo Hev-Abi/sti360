@@ -57,11 +57,12 @@
 
           if (error) throw error;
 
-          const {
-            data: { session },
-          } = await supabase.auth.getSession();
+          const { data: { user } } = await supabase.auth.getUser();
 
-          const role = await getUserRole(session.user.id);
+          if (!user) throw new Error("Login failed. No user found.");
+
+          const role = await getUserRole(user.id);
+
           navigate(roleRedirect(role));
         }
       } catch (err) {

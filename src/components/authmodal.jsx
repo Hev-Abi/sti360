@@ -30,7 +30,6 @@ function AuthModal({ onClose }) {
           return;
         }
 
-        // ✅ GET USER ROLE
         const role = await getUserRole();
 
         if (!role) {
@@ -38,7 +37,6 @@ function AuthModal({ onClose }) {
           return;
         }
 
-        // ✅ REDIRECT BASED ON ROLE
         onClose();
         redirectByRole(role, navigate);
       } else {
@@ -48,7 +46,7 @@ function AuthModal({ onClose }) {
             });
 
             if (!error && data.user) {
-            await createProfile(data.user.id, "student"); // default role
+            await createProfile(data.user.id, "student"); 
             }
 
         setErrorMsg("Signup successful! Check your email.");
