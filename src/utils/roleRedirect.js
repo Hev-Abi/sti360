@@ -1,22 +1,22 @@
 export function redirectByRole(role, navigate) {
   switch (role) {
-    case "admin":
+    case "A":
       navigate("/admin-dashboard");
       break;
 
-    case "student":
+    case "S":
       navigate("/student-dashboard");
       break;
 
-    case "guidance":
+    case "G":
       navigate("/guidance-dashboard");
       break;
 
-    case "frontdesk":
+    case "F":
       navigate("/frontdesk-dashboard");
       break;
 
-    case "sao":
+    case "SAO":
       navigate("/marketing-dashboard");
       break;
 

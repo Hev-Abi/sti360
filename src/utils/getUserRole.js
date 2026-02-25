@@ -1,5 +1,3 @@
-import { supabase } from "../lib/supabase";
-
 export async function getUserRole() {
   const {
     data: { user },
@@ -7,11 +5,18 @@ export async function getUserRole() {
 
   if (!user) return null;
 
-  const { data } = await supabase
+  const { data, error } = await supabase
     .from("profiles")
-    .select("roles")
+    .select("role")
     .eq("id", user.id)
     .single();
 
-  return data?.roles || null;
+  if (error) {
+    console.error("Role fetch error:", error);
+    return null;
+  }
+
+  return Array.isArray(data?.roles)
+    ? data.roles[0]
+    : data?.roles || null;
 }

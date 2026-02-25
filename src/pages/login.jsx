@@ -9,27 +9,24 @@ function Login() {
   const [loading, setLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState(""); 
 
-  const handleLogin = async (e) => {        
+  const handleLogin = async (e) => {
     e.preventDefault();
     setLoading(true);
-    setErrorMsg(""); 
+    setErrorMsg("");
 
-    const { error } = await supabase.auth.signInWithPassword({
+    const { data, error } = await supabase.auth.signInWithPassword({
       email,
       password,
     });
 
     setLoading(false);
 
+    console.log("LOGIN RESPONSE:", { data, error });
+
     if (error) {
-      if (error.message.includes("Invalid login credentials")) {
-        setErrorMsg("Incorrect email or password.");
-      } else {
-        setErrorMsg(error.message);
-      }
+      setErrorMsg(error.message);
     } else {
-      setErrorMsg("");
-      alert("Login successful! Redirecting... ");
+      navigate("/admin-dashboard");
     }
   };
 
@@ -49,7 +46,7 @@ function Login() {
       setErrorMsg(error.message);
     } else {
       setErrorMsg("");
-      alert("Signup successful! Check email 📩");
+      alert("Signup successful! Check email for confirmation link.");
     }
   };
 
@@ -81,7 +78,6 @@ function Login() {
           required
         />
 
-        {/* ✅ Inline error message */}
         {errorMsg && <div className="login-error">{errorMsg}</div>}
 
         <button className="login-btn" disabled={loading}>

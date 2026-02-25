@@ -4,6 +4,10 @@ import { ROLES } from "../constants/roles";
 export default function DashboardShell({ role, children, nav, activeNav, setActiveNav, onLogout }) {
   const r = ROLES[role];
 
+  if (!r) {
+    return <div>Invalid role: {role}</div>;
+  }
+  
   return (
     <div style={{ display: "flex", minHeight: "100vh", background: "#f7f8fa" }}>
       <div style={{ width: 220, background: "#fff", padding: 20 }}>
