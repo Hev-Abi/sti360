@@ -1,22 +1,11 @@
-export async function getUserRole() {
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+import { supabase } from "../lib/supabase";
 
-  if (!user) return null;
-
-  const { data, error } = await supabase
+export const getUserRole = async (userId) => {
+  const { data } = await supabase
     .from("profiles")
     .select("role")
-    .eq("id", user.id)
+    .eq("id", userId)
     .single();
 
-  if (error) {
-    console.error("Role fetch error:", error);
-    return null;
-  }
-
-  return Array.isArray(data?.roles)
-    ? data.roles[0]
-    : data?.roles || null;
-}
+  return data?.role || "student";
+};

@@ -1,13 +1,11 @@
-import { useState } from "react";
-import AuthModal from "../components/authmodal";
+import { useNavigate } from "react-router-dom";
 import wallpaper from "../assets/stiwallpaper.jpg";
 
 function Landing() {
-  const [showModal, setShowModal] = useState(false);
+  const navigate = useNavigate();
 
   return (
     <div style={styles.container}>
-      {/* NAVBAR */}
       <nav style={styles.navbar}>
         <div style={styles.navInner}>
           <div style={styles.logo}>STI Education Services Group</div>
@@ -18,7 +16,7 @@ function Landing() {
 
             <button
               style={styles.loginBtn}
-              onClick={() => setShowModal(true)}
+              onClick={() => navigate("/login")}
             >
               Log in
             </button>
@@ -26,16 +24,12 @@ function Landing() {
         </div>
       </nav>
 
-      {/* HERO */}
       <div
         style={{
           ...styles.hero,
           backgroundImage: `url(${wallpaper})`,
         }}
       />
-
-      {/* MODAL */}
-      {showModal && <AuthModal onClose={() => setShowModal(false)} />}
     </div>
   );
 }
@@ -95,4 +89,4 @@ const styles = {
   },
 };
 
-export default Landing;
+export default Landing; 

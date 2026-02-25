@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "../lib/supabase";
 import { getUserRole } from "../utils/getUserRole";
-import { redirectByRole } from "../utils/roleRedirect";
+import { roleRedirect } from "../utils/roleRedirect";
 import { createProfile } from "../utils/createProfile";
 
 function AuthModal({ onClose }) {

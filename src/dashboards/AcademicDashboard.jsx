@@ -1,10 +1,16 @@
 import { useState } from "react";
 import { useNavigate, Outlet } from "react-router-dom";
 import DashboardShell from "../components/DashboardShell";
+import { supabase } from "../lib/supabase";
 
-export default function AcademicDashboard({ onLogout }) {
+export default function AcademicDashboard() {
   const navigate = useNavigate();
   const [activeNav, setActiveNav] = useState("reports");
+
+  const handleLogout = async () => {
+    await supabase.auth.signOut();
+    navigate("/");
+  };
 
   const navItems = [
     { key: "reports", label: "View Reports" },
@@ -14,8 +20,12 @@ export default function AcademicDashboard({ onLogout }) {
   const handleNav = (key) => {
     setActiveNav(key);
 
-    if (key === "reports") navigate("/admin-dashboard/reports");
-    if (key === "employment") navigate("/admin-dashboard/employment");
+    const routes = {
+      reports: "/admin-dashboard/reports",
+      employment: "/admin-dashboard/employment",
+    };
+
+    navigate(routes[key]);
   };
 
   return (
@@ -24,10 +34,9 @@ export default function AcademicDashboard({ onLogout }) {
       nav={navItems}
       activeNav={activeNav}
       setActiveNav={handleNav}
-      onLogout={onLogout}
+      onLogout={handleLogout}
     >
       <h1>Admin Dashboard</h1>
-
       <Outlet />
     </DashboardShell>
   );

@@ -1,6 +1,8 @@
 import { Routes, Route } from "react-router-dom";
 
-import Landing from "./pages/landing";
+import Landing from "./pages/Landing";
+import Login from "./pages/login"; 
+
 import SchoolManagement from "./pages/school-management";
 
 import AcademicDashboard from "./dashboards/AcademicDashboard";
@@ -12,6 +14,8 @@ function App() {
   return (
     <Routes>
       <Route path="/" element={<Landing />} />
+      <Route path="/login" element={<Login />} />
+
       <Route path="/school-management" element={<SchoolManagement />} />
 
       <Route path="/admin-dashboard" element={<AcademicDashboard />}>

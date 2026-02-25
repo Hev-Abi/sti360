@@ -1,26 +1,18 @@
-export function redirectByRole(role, navigate) {
+export const roleRedirect = (role) => {
   switch (role) {
-    case "A":
-      navigate("/admin-dashboard");
-      break;
+    case "admin":
+      return "/admin-dashboard";
 
-    case "S":
-      navigate("/student-dashboard");
-      break;
+    case "student":
+      return "/student-dashboard";
 
-    case "G":
-      navigate("/guidance-dashboard");
-      break;
+    case "marketing":
+      return "/marketing-dashboard";
 
-    case "F":
-      navigate("/frontdesk-dashboard");
-      break;
-
-    case "SAO":
-      navigate("/marketing-dashboard");
-      break;
+    case "guidance":
+      return "/guidance-dashboard";
 
     default:
-      navigate("/");
+      return "/";
   }
-}
+};
