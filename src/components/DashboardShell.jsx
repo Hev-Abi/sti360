@@ -1,117 +1,81 @@
-import { ROLES } from "../constants/roles";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function DashboardShell({
-  role,
-  children,
-  nav = [],
+  nav,
   activeNav,
   setActiveNav,
   onLogout,
+  children,
 }) {
-  const roleConfig = ROLES[role];
+  const [collapsed, setCollapsed] = useState(false);
+  const navigate = useNavigate();
 
-  if (!roleConfig) {
-    return (
-      <div style={{ padding: 40 }}>
-        <h2>Invalid Role</h2>
-        <p>No configuration found for: {role}</p>
-      </div>
-    );
-  }
+const handleLogout = () => {
+  // remove stored login if you have one
+  localStorage.removeItem("user");
+
+  // redirect to login page
+  navigate("/login");
+};
 
   return (
-    <div style={styles.container}>
-      {/* SIDEBAR */}
-      <aside style={styles.sidebar}>
-        <div>
-          <h2 style={styles.brand}>STI 360 Life Cycle</h2>
-          <p style={styles.roleLabel}>{roleConfig.label}</p>
+    <div className="flex h-screen bg-white text-gray-800">
 
-          <div style={styles.navContainer}>
-            {nav.map((item) => (
-              <button
-                key={item.key}
-                onClick={() => setActiveNav(item.key)}
-                style={{
-                  ...styles.navButton,
-                  background:
-                    activeNav === item.key ? "#0077b6" : "transparent",
-                  color: activeNav === item.key ? "#fff" : "#333",
-                }}
-              >
-                {item.label}
-              </button>
-            ))}
-          </div>
+      {/* SIDEBAR */}
+      <aside
+        className={`${
+          collapsed ? "w-20" : "w-64"
+        } bg-[#0f2a44] flex flex-col transition-all duration-300`}
+      >
+
+        {/* Logo + Toggle */}
+        <div className="p-4 flex items-center justify-between border-b border-[#17324d] text-white">
+          {!collapsed && (
+            <span className="text-xl font-bold">STI 360</span>
+          )}
+
+          <button
+            onClick={() => setCollapsed(!collapsed)}
+            className="text-white text-xl hover:text-gray-300"
+          >
+            ☰
+          </button>
         </div>
 
-        {/* LOGOUT */}
-        <button style={styles.logoutBtn} onClick={onLogout}>
-          Logout
-        </button>
+        {/* Navigation */}
+        <nav className="flex-1 p-2 space-y-2">
+          {nav.map((item) => (
+            <button
+              key={item.key}
+              onClick={() => setActiveNav(item.key)}
+              className={`w-full text-left px-4 py-3 rounded-lg transition ${
+                activeNav === item.key
+                  ? "bg-[#1b3b5c] text-white font-semibold"
+                  : "hover:bg-[#17324d] text-gray-300"
+              }`}
+            >
+              {collapsed ? item.label.charAt(0) : item.label}
+            </button>
+          ))}
+        </nav>
+
+        {/* Logout */}
+        <div className="p-4 border-t border-[#17324d]">
+          <button
+            onClick={handleLogout}
+            className="w-full bg-[#17324d] hover:bg-[#1b3b5c] py-2 rounded text-white transition"
+          >
+            {collapsed ? "⎋" : "Logout"}
+          </button>
+        </div>
       </aside>
 
       {/* MAIN CONTENT */}
-      <main style={styles.main}>{children}</main>
+      <main className="flex-1 p-8 overflow-auto bg-white">
+        {children}
+      </main>
+
     </div>
   );
 }
-
-const styles = {
-  container: {
-    display: "flex",
-    minHeight: "100vh",
-    background: "#f7f8fa",
-  },
-
-  sidebar: {
-    width: 240,
-    background: "#fff",
-    padding: 20,
-    display: "flex",
-    flexDirection: "column",
-    justifyContent: "space-between",
-    borderRight: "1px solid #eee",
-  },
-
-  brand: {
-    marginBottom: 4,
-  },
-
-  roleLabel: {
-    fontSize: 13,
-    color: "#777",
-    marginBottom: 20,
-  },
-
-  navContainer: {
-    display: "flex",
-    flexDirection: "column",
-    gap: 8,
-  },
-
-  navButton: {
-    padding: "10px 12px",
-    border: "none",
-    borderRadius: 6,
-    cursor: "pointer",
-    textAlign: "left",
-    fontSize: 14,
-    transition: "0.2s",
-  },
-
-  logoutBtn: {
-    padding: "10px",
-    border: "none",
-    borderRadius: 6,
-    background: "#e63946",
-    color: "white",
-    cursor: "pointer",
-    fontWeight: "bold",
-  },
-
-  main: {
-    flex: 1,
-    padding: 30,
-  },
-};

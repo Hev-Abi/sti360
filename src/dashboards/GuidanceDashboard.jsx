@@ -1,18 +1,43 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import DashboardShell from "../components/DashboardShell";
+import { logoutUser } from "../lib/auth";
 
-export default function GuidanceDashboard({ onLogout }) {
-  const [nav, setNav] = useState("home");
+import GraduateList from "../features/guidance/GraduateList";
+import EmployedAnalytics from "../features/analytics/components/EmployedAnalytics";
+import UnemployedAnalytics from "../features/analytics/components/UnemployedAnalytics";
+import ReportGenerator from "../features/guidance/ReportGenerator";
+
+export default function GuidanceDashboard() {
+  const navigate = useNavigate();
+  const [nav, setNav] = useState("analytics");
+
+  const handleLogout = async () => {
+    await logoutUser();
+    navigate("/login"); 
+  };
 
   return (
     <DashboardShell
       role="G"
-      nav={[{ key: "home", label: "Guidance" }]}
+      nav={[
+        { key: "analytics", label: "Analytics" },
+        { key: "graduates", label: "Graduates" },
+        { key: "reports", label: "Reports" }
+      ]}
       activeNav={nav}
       setActiveNav={setNav}
-      onLogout={onLogout}
+      onLogout={handleLogout}
     >
-      <h1>Guidance Dashboard</h1>
+      {nav === "analytics" && (
+        <>
+          <EmployedAnalytics />
+          <UnemployedAnalytics />
+        </>
+      )}
+
+      {nav === "graduates" && <GraduateList />}
+      {nav === "reports" && <ReportGenerator />}
     </DashboardShell>
   );
 }

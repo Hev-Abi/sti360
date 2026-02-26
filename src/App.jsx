@@ -1,49 +1,52 @@
 import { Routes, Route } from "react-router-dom";
 
+/* ========= PAGES ========= */
 import Landing from "./pages/Landing";
 import Login from "./pages/login";
 import SchoolManagement from "./pages/school-management";
 
-/* ADMIN DASHBOARD */
+/* ========= DASHBOARDS ========= */
 import AcademicDashboard from "./dashboards/AcademicDashboard";
-import AdminReports from "./dashboards/admin/AdminReports";
-import EmploymentAnalytics from "./dashboards/admin/EmploymentAnalytics";
-import GraduateData from "./dashboards/admin/GraduateData";
-
-/* OTHER ROLE DASHBOARDS */
 import StudentDashboard from "./dashboards/StudentDashboard";
 import GuidanceDashboard from "./dashboards/GuidanceDashboard";
 import MarketingDashboard from "./dashboards/MarketingDashboard";
 import FrontDeskDashboard from "./dashboards/FrontDeskDashboard";
 
-function App() {
+/* ========= ADMIN FEATURES ========= */
+import AdminReports from "./features/admin/AdminReports";
+import EmploymentAnalytics from "./features/admin/EmploymentAnalytics";
+import GraduateData from "./features/admin/GraduateData";
+import UserManager from "./features/admin/UserManager";
+
+/* ========= STUDENT FEATURES ========= */
+import { StudentLifecyclePage } from "./features/studentLifecycle";
+
+export default function App() {
   return (
     <Routes>
-      {/* PUBLIC */}
+      {/* ================= PUBLIC ROUTES ================= */}
       <Route path="/" element={<Landing />} />
       <Route path="/login" element={<Login />} />
       <Route path="/school-management" element={<SchoolManagement />} />
 
-      {/* ADMIN */}
+      {/* ================= ADMIN DASHBOARD ================= */}
       <Route path="/admin-dashboard" element={<AcademicDashboard />}>
+        <Route index element={<AdminReports />} />
         <Route path="reports" element={<AdminReports />} />
         <Route path="employment" element={<EmploymentAnalytics />} />
         <Route path="graduate-data" element={<GraduateData />} />
+        <Route path="users" element={<UserManager />} />
       </Route>
 
-      {/* STUDENT */}
-      <Route path="/student-dashboard" element={<StudentDashboard />} />
+      {/* ================= STUDENT DASHBOARD ================= */}
+      <Route path="/student-dashboard" element={<StudentDashboard />}>
+        <Route path="lifecycle" element={<StudentLifecyclePage />} />
+      </Route>
 
-      {/* GUIDANCE */}
+      {/* ================= OTHER ROLE DASHBOARDS ================= */}
       <Route path="/guidance-dashboard" element={<GuidanceDashboard />} />
-
-      {/* MARKETING (SAO) */}
       <Route path="/marketing-dashboard" element={<MarketingDashboard />} />
-
-      {/* FRONTDESK */}
       <Route path="/frontdesk-dashboard" element={<FrontDeskDashboard />} />
     </Routes>
   );
 }
-
-export default App;

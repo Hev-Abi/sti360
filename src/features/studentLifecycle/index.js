@@ -1,0 +1,1 @@
+export { default as StudentLifecyclePage } from "./pages/StudentLifecyclePage";

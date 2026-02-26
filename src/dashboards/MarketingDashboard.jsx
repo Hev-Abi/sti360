@@ -1,18 +1,23 @@
 import { useState } from "react";
 import DashboardShell from "../components/DashboardShell";
 
+import { marketingNav } from "../features/marketing/config/marketingNav";
+import { marketingRoutes } from "../features/marketing/config/marketingRoutes";
+
 export default function MarketingDashboard({ onLogout }) {
-  const [nav, setNav] = useState("marketing");
+  const [activeNav, setActiveNav] = useState("marketing");
+
+  const ActiveView = marketingRoutes[activeNav];
 
   return (
     <DashboardShell
       role="SAO"
-      nav={[{ key: "marketing", label: "Marketing Dashboard" }]}
-      activeNav={nav}
-      setActiveNav={setNav}
       onLogout={onLogout}
+      nav={marketingNav}
+      activeNav={activeNav}
+      setActiveNav={setActiveNav}
     >
-      <h1>Marketing Dashboard</h1>
+      <ActiveView />
     </DashboardShell>
   );
 }
