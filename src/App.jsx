@@ -1,9 +1,9 @@
 import { Routes, Route } from "react-router-dom";
 
 /* ========= PAGES ========= */
-import Landing from "./pages/Landing";
-import Login from "./pages/login";
-import SchoolManagement from "./pages/school-management";
+import Landing from "./pages/landing.jsx";
+import Login from "./pages/login.jsx";
+import SchoolManagement from "./pages/school-management.jsx";
 
 /* ========= DASHBOARDS ========= */
 import AcademicDashboard from "./dashboards/AcademicDashboard";
