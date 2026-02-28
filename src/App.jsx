@@ -19,7 +19,7 @@ import GraduateData from "./features/admin/GraduateData";
 import UserManager from "./features/admin/UserManager";
 
 /* ========= STUDENT FEATURES ========= */
-import { StudentLifecyclePage } from "./features/studentLifecycle";
+import { LifecyclePage } from "./features/studentLifecycle";
 
 export default function App() {
   return (
@@ -40,7 +40,7 @@ export default function App() {
 
       {/* ================= STUDENT DASHBOARD ================= */}
       <Route path="/student-dashboard" element={<StudentDashboard />}>
-        <Route path="lifecycle" element={<StudentLifecyclePage />} />
+       <Route path="lifecycle" element={<LifecyclePage />} />
       </Route>
 
       {/* ================= OTHER ROLE DASHBOARDS ================= */}
